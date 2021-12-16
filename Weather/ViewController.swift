@@ -52,7 +52,8 @@ class ViewController: UIViewController,CLLocationManagerDelegate{
         }
     }
     func requestWeatherData() {
-        guard let currentLocation = currentLocation else {return}
+        DispatchQueue.global(qos: .userInitiated).async{ [weak self] in
+            guard let currentLocation = self?.currentLocation else {return}
         let long = currentLocation.coordinate.longitude
         let lat = currentLocation.coordinate.latitude
         
@@ -176,17 +177,17 @@ class ViewController: UIViewController,CLLocationManagerDelegate{
                     }
                        
                         let url = URL(string: "https://openweathermap.org/img/wn/\(currentDayForecast[0].icon)@2x.png")
-                        DispatchQueue.main.async {
-                            self.forecast = forecastModelArray
+                        DispatchQueue.main.async { [weak self] in
+                            self?.forecast = forecastModelArray
                            
-                            self.temperature.text = "\(currentDayForecast[0].temp.toInt() ?? 0)°C"
-                            self.wind.text = "Wind: \(currentDayForecast[0].wind.kmh() ?? 0)km/h"
-                            self.place.text = "\(currentDayForecast[0].name)"
-                            self.day.text = "\(currentDayForecast[0].date)"
-                            self.time.text = "\(currentDayForecast[0].time)"
-                            self.descriptions.text = "\(currentDayForecast[0].simpleDescription)"
-                            self.collectionV.reloadData()
-                            self.viewImage.loadImage(url: url!)
+                            self?.temperature.text = "\(currentDayForecast[0].temp.toInt() ?? 0)°C"
+                            self?.wind.text = "Wind: \(currentDayForecast[0].wind.kmh() ?? 0)km/h"
+                            self?.place.text = "\(currentDayForecast[0].name)"
+                            self?.day.text = "\(currentDayForecast[0].date)"
+                            self?.time.text = "\(currentDayForecast[0].time)"
+                            self?.descriptions.text = "\(currentDayForecast[0].simpleDescription)"
+                            self?.collectionV.reloadData()
+                            self?.viewImage.loadImage(url: url!)
                         }
                 }
             }
@@ -196,6 +197,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate{
         
         
 }
+    }
 }
 
 
@@ -245,7 +247,7 @@ extension ViewController: UISearchBarDelegate{
 
         let urlString = "https://api.openweathermap.org/data/2.5/forecast?q=\(city)&units=metric&appid=6f82f48c92e97ee65b96d117f86d4e0d"
         let url = URL(string: urlString)!
-        
+        DispatchQueue.global(qos: .userInitiated).async {
         URLSession.shared.dataTask(with: url) { data, _,_ in
             if let jsonData = data{
                 if let decodedJSON = try?
@@ -356,19 +358,19 @@ extension ViewController: UISearchBarDelegate{
                     }
                         let url = URL(string: "https://openweathermap.org/img/wn/\(currentDayForecast[0].icon)@2x.png")
                         
-                        DispatchQueue.main.async {
-                            self.forecast = forecastModelArray
+                        DispatchQueue.main.async { [weak self] in
+                            self?.forecast = forecastModelArray
                            
-                            self.forecast = forecastModelArray
+                            self?.forecast = forecastModelArray
                            
-                            self.temperature.text = "\(currentDayForecast[0].temp.toInt() ?? 0)°C"
-                            self.wind.text = "\(currentDayForecast[0].wind.kmh() ?? 0) km/h"
-                            self.place.text = "\(currentDayForecast[0].name)"
-                            self.day.text = "\(currentDayForecast[0].date)"
-                            self.time.text = "\(currentDayForecast[0].time)"
-                            self.descriptions.text = "\(currentDayForecast[0].simpleDescription)"
-                            self.viewImage.loadImage(url: url!)
-                            self.collectionV.reloadData()
+                            self?.temperature.text = "\(currentDayForecast[0].temp.toInt() ?? 0)°C"
+                            self?.wind.text = "\(currentDayForecast[0].wind.kmh() ?? 0) km/h"
+                            self?.place.text = "\(currentDayForecast[0].name)"
+                            self?.day.text = "\(currentDayForecast[0].date)"
+                            self?.time.text = "\(currentDayForecast[0].time)"
+                            self?.descriptions.text = "\(currentDayForecast[0].simpleDescription)"
+                            self?.viewImage.loadImage(url: url!)
+                            self?.collectionV.reloadData()
                            
                         }
                 }
@@ -376,7 +378,7 @@ extension ViewController: UISearchBarDelegate{
             }
             
         }.resume()
-        
+        }
     
     }
     
