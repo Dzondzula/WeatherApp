@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -20,13 +20,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EZO-82-B7G">
                                 <rect key="frame" x="0.0" y="118" width="414" height="200"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdB-mR-zB1">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Temp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdB-mR-zB1">
                                         <rect key="frame" x="165.5" y="76.5" width="91" height="47.5"/>
                                         <fontDescription key="fontDescription" name="NotoSansKannada-Bold" family="Noto Sans Kannada" pointSize="35"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SVo-pE-MPg">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SVo-pE-MPg">
                                         <rect key="frame" x="8" y="59" width="97" height="82"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xtw-px-rgi">
@@ -41,7 +41,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijb-Mx-LLL">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Wind" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ijb-Mx-LLL">
                                         <rect key="frame" x="358" y="66" width="40" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -54,7 +54,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8F-E3-Nn7">
-                                        <rect key="frame" x="8" y="8" width="181" height="34"/>
+                                        <rect key="frame" x="8" y="8" width="65.5" height="34"/>
                                         <fontDescription key="fontDescription" name="NotoSansKannada-Bold" family="Noto Sans Kannada" pointSize="25"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -65,21 +65,18 @@
                                     <constraint firstItem="Ijb-Mx-LLL" firstAttribute="top" secondItem="Uyb-e9-ugY" secondAttribute="bottom" constant="8" symbolic="YES" id="0Mi-5e-vmt"/>
                                     <constraint firstItem="SVo-pE-MPg" firstAttribute="top" secondItem="EZO-82-B7G" secondAttribute="top" constant="59" id="4Uc-z9-8Ng"/>
                                     <constraint firstItem="o8F-E3-Nn7" firstAttribute="leading" secondItem="EZO-82-B7G" secondAttribute="leading" constant="8" id="50v-G8-5a4"/>
-                                    <constraint firstItem="Xtw-px-rgi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qdB-mR-zB1" secondAttribute="trailing" constant="8" symbolic="YES" id="8S3-zL-fcC"/>
+                                    <constraint firstItem="qdB-mR-zB1" firstAttribute="leading" secondItem="SVo-pE-MPg" secondAttribute="trailing" priority="500" constant="60.5" id="B55-gy-8Ef"/>
                                     <constraint firstItem="o8F-E3-Nn7" firstAttribute="top" secondItem="EZO-82-B7G" secondAttribute="top" constant="8" id="Bbq-NA-fPE"/>
                                     <constraint firstItem="qdB-mR-zB1" firstAttribute="centerY" secondItem="EZO-82-B7G" secondAttribute="centerY" id="EPt-OC-kQP"/>
-                                    <constraint firstItem="Ijb-Mx-LLL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qdB-mR-zB1" secondAttribute="trailing" constant="8" symbolic="YES" id="GNI-FY-oZU"/>
                                     <constraint firstAttribute="trailing" secondItem="Xtw-px-rgi" secondAttribute="trailing" constant="12" id="Gfi-uj-h8h"/>
                                     <constraint firstAttribute="trailing" secondItem="Ijb-Mx-LLL" secondAttribute="trailing" constant="16" id="I9x-UB-QOh"/>
-                                    <constraint firstItem="Izt-D5-H4f" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SVo-pE-MPg" secondAttribute="trailing" constant="8" symbolic="YES" id="J5J-oM-4us"/>
-                                    <constraint firstItem="qdB-mR-zB1" firstAttribute="leading" secondItem="SVo-pE-MPg" secondAttribute="trailing" constant="60.5" id="N5H-Li-IKY"/>
-                                    <constraint firstAttribute="trailing" secondItem="o8F-E3-Nn7" secondAttribute="trailing" constant="225" id="PQT-dK-nti"/>
+                                    <constraint firstItem="qdB-mR-zB1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SVo-pE-MPg" secondAttribute="trailing" priority="900" constant="10" id="N5H-Li-IKY"/>
                                     <constraint firstItem="SVo-pE-MPg" firstAttribute="leading" secondItem="o8F-E3-Nn7" secondAttribute="leading" id="Uhe-2v-N4x"/>
-                                    <constraint firstItem="Uyb-e9-ugY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="o8F-E3-Nn7" secondAttribute="trailing" constant="8" symbolic="YES" id="Vbm-Bf-mkd"/>
                                     <constraint firstAttribute="trailing" secondItem="Izt-D5-H4f" secondAttribute="trailing" constant="16" id="Wc8-m0-sW3"/>
                                     <constraint firstAttribute="trailing" secondItem="Uyb-e9-ugY" secondAttribute="trailing" constant="16" id="fb6-WK-F4G"/>
                                     <constraint firstItem="Izt-D5-H4f" firstAttribute="top" secondItem="Xtw-px-rgi" secondAttribute="bottom" constant="8" symbolic="YES" id="iug-Gw-5hq"/>
                                     <constraint firstItem="qdB-mR-zB1" firstAttribute="centerX" secondItem="EZO-82-B7G" secondAttribute="centerX" constant="4" id="qnb-pT-Wff"/>
+                                    <constraint firstItem="Ijb-Mx-LLL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qdB-mR-zB1" secondAttribute="trailing" constant="10" id="ufW-JQ-G3U"/>
                                     <constraint firstItem="Xtw-px-rgi" firstAttribute="top" secondItem="Ijb-Mx-LLL" secondAttribute="bottom" constant="8" symbolic="YES" id="vkD-yZ-8ZR"/>
                                     <constraint firstItem="Uyb-e9-ugY" firstAttribute="top" secondItem="EZO-82-B7G" secondAttribute="top" constant="37" id="whx-I6-nEL"/>
                                     <constraint firstAttribute="bottom" secondItem="Izt-D5-H4f" secondAttribute="bottom" constant="55" id="z6Z-bC-lXu"/>

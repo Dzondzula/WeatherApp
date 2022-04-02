@@ -2,13 +2,13 @@
 
 import UIKit
 
-struct ForecastDay{
+struct ForecastDay: Codable,Equatable{
     let weekDay : String?
     let hourForecast : [ForecastDayInfo]?
 }
 
 
-struct ForecastDayInfo{
+struct ForecastDayInfo:Codable,Equatable{
     let minTemp: Double
     let maxTemp: Double
     let icon: String
@@ -21,7 +21,7 @@ struct ForecastDayInfo{
     var simpleDescription: String
 }
 
-
+//JSON MODEL
 struct ForecastResponse : Codable {
     var list : [ForecastDetail]
     var city : CityInfo
