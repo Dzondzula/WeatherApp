@@ -3,17 +3,17 @@
 import UIKit
 
 struct ForecastDay: Codable,Equatable{
-    let weekDay : String?
-    let hourForecast : [ForecastDayInfo]?
+    var weekDay : String?
+    var hourForecast : [ForecastDayInfo]?
 }
 
 
 struct ForecastDayInfo:Codable,Equatable{
-    let minTemp: Double
-    let maxTemp: Double
-    let icon: String
-    let time: String
-    let name : String
+    var minTemp: Double
+    var maxTemp: Double
+    var icon: String
+    var time: String
+    var name : String
     var temp : Double
     var description : String
     var wind : Double

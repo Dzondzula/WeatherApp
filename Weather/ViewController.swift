@@ -19,18 +19,18 @@ class ViewController: UIViewController,CLLocationManagerDelegate{
     @IBOutlet weak var place: UILabel!
     @IBOutlet weak var temperature: UILabel!
     var session : URLSessionProtocol = URLSession.shared
-  
-    var forecast :[ForecastDay] = []{
+    
+    var forecast :[ForecastDay] = []
+    var viewModel: WeatherDayViewModel?{
         didSet{
-            handleResults(forecast)
+            //updateView()
         }
     }
-    var handleResults: ([ForecastDay]) -> Void = { print($0) }
     var currentLocation : CLLocation!
     let locationManager = CLLocationManager()
     
     var backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-  
+    
     
     @IBOutlet weak var search: UISearchBar!
     @IBOutlet weak var collectionV: UICollectionView!
@@ -71,21 +71,29 @@ class ViewController: UIViewController,CLLocationManagerDelegate{
         switch data{
         case .success(let info):
             self.forecast = info
-            if let forecastData = forecast[0].hourForecast?[0]{
+            self.viewModel = WeatherDayViewModel(wetherDay: forecast)
+            if let viewModel = viewModel{
                 DispatchQueue.main.async{
-                    let url = URL(string: "https://openweathermap.org/img/wn/\(forecastData.icon)@2x.png")
-                    self.wind.text = "Wind: \(forecastData.wind.kmh() ?? 0)km/h"
-                    self.place.text = "\(forecastData.name)"
-                    self.day.text = "\(forecastData.date)"
-                    self.time.text = "\(forecastData.time)"
-                    self.descriptions.text = "\(forecastData.simpleDescription)"
-                    self.viewImage.loadImage(url: url!)
-                    self.temperature.text = "\(forecastData.temp.toInt() ?? 0)°C"
+                    self.wind.text = viewModel.wind(for: 0)
+                    self.place.text = viewModel.place(for: 0)
+                    self.day.text = viewModel.day(for: 0)
+                    self.time.text = viewModel.time(for: 0)
+                    self.descriptions.text = viewModel.description(for: 0)
+                    self.temperature.text = viewModel.temperature(for: 0)
+                    if let url = viewModel.urlString(for: 0){
+                        self.viewImage.loadImage(url: URL(string:url)!)
+                    }
                     self.collectionV.reloadData()
                 }
             }
         case .failure(let error):
             print("\(error.localizedDescription)")
+        }
+    }
+    private func updateView(){
+        collectionV.refreshControl?.endRefreshing()
+        if let _ = viewModel{
+            collectionV.reloadData()
         }
     }
 }
@@ -98,27 +106,31 @@ extension ViewController: UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewCell
         cell.backgroundColor = .init(white: 1, alpha:0.1)
-        cell.config(with: forecast[indexPath.item])
-        cell.layer.cornerRadius = 8.0
+        self.viewModel = WeatherDayViewModel(wetherDay: forecast)
+        if let weather = viewModel?.viewModel(for: indexPath.row){
+            cell.config(withViewModel: weather)
+        }
         
+        cell.layer.cornerRadius = 8.0
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let forecast = forecast[indexPath.item]
-        place.text = "\(forecast.hourForecast![0].name )"
-        day.text = "\(forecast.hourForecast![0].date)"
-        wind.text = "\(forecast.hourForecast![0].wind.kmh() ?? 0) km/h"
-        time.text = "\(forecast.hourForecast![0].time)"
-        descriptions.text = "\(forecast.hourForecast![0].simpleDescription)"
-        temperature.text = "\(forecast.hourForecast![0].temp.toInt() ?? 0)°C"
-        let url = URL(string: "https://openweathermap.org/img/wn/\(forecast.hourForecast![0].icon)@2x.png")
         
-        viewImage.loadImage(url: url!)
-        
+        self.viewModel = WeatherDayViewModel(wetherDay: forecast)
+        if let viewModel = viewModel{
+            place.text =  viewModel.place(for: indexPath.row)!
+            day.text = viewModel.day(for: indexPath.row)!
+            wind.text = viewModel.wind(for: indexPath.row)!
+            time.text = viewModel.time(for: indexPath.row)!
+            descriptions.text = viewModel.description(for: indexPath.row)!
+            temperature.text = viewModel.temperature(for: indexPath.row)
+            if let url = viewModel.urlString(for: indexPath.row){
+                viewImage.loadImage(url: URL(string: url)!)
+            }
+        }
     }
-    
 }
 
 extension ViewController: UISearchBarDelegate{
@@ -131,22 +143,24 @@ extension ViewController: UISearchBarDelegate{
             switch data{
             case .success(let info):
                 self.forecast = info
-                
-                if let forecastData = forecast[0].hourForecast?[0]{
+                self.viewModel = WeatherDayViewModel(wetherDay: forecast)
+                if let viewModel = viewModel {
                     DispatchQueue.main.async{
-                        let url = URL(string: "https://openweathermap.org/img/wn/\(forecastData.icon)@2x.png")
-                        self.wind.text = "Wind: \(forecastData.wind.kmh() ?? 0)km/h"
-                        self.place.text = "\(forecastData.name)"
-                        self.day.text = "\(forecastData.date)"
-                        self.time.text = "\(forecastData.time)"
-                        self.descriptions.text = "\(forecastData.simpleDescription)"
-                        self.viewImage.loadImage(url: url!)
-                        self.temperature.text = "\(forecastData.temp.toInt() ?? 0)°C"
+                        
+                        self.wind.text = viewModel.wind(for: 0)
+                        self.place.text = viewModel.place(for: 0)
+                        self.day.text = viewModel.day(for: 0)
+                        self.time.text = viewModel.time(for: 0)
+                        self.descriptions.text = viewModel.description(for: 0)
+                        self.temperature.text = viewModel.temperature(for: 0)
+                        if let url = viewModel.urlString(for: 0){
+                            self.viewImage.loadImage(url: URL(string:url)!)
+                        }
                         
                         self.collectionV.reloadData()
-                        
                     }
                 }
+                
             case .failure(let error):
                 print("\(error.localizedDescription)")
             }
@@ -155,7 +169,7 @@ extension ViewController: UISearchBarDelegate{
     }
     
     func fetchForecastForMyLocation(_ lat: String? = nil, _ long: String? = nil, _ city: String? = nil) async -> Result<[ForecastDay],MyError>{
-       
+        
         do{
             let url = ForecastEndPoint.url(lat, long, city)
             let (data, response) = try await session.data(from: url, delegate: nil)
